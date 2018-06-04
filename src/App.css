@@ -1,0 +1,90 @@
+.Menu a {
+  color: black;
+  text-align: center;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.Menu a:first-of-type {
+  margin-top: 5rem;
+}
+
+/* Position and sizing of burger button */
+
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 36px;
+}
+
+/* Color/shape of burger icon bars */
+
+.bm-burger-bars {
+  background: #373a47;
+  height: 12% !important;
+}
+
+/* Position and sizing of clickable cross button */
+
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+
+.bm-cross {
+  background: #bdc3c7;
+}
+
+/* General sidebar styles */
+
+.bm-menu {
+  background: #fff;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+  overflow: hidden !important;
+}
+
+/* Morph shape necessary with bubble or elastic */
+
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+/* Styling of overlay */
+
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.menu-mondial {
+  width: 150px;
+  height: 28px;
+  margin: 0 auto;
+  padding: .3rem;
+}
+
+.menu-punchline {
+  width: 150px;
+  height: 28px;
+  margin: 0 auto;
+  padding: .3rem;
+}
+
+.menu-yammer {
+  width: 90px;
+  height: 18px;
+  margin: 0 auto;
+  padding: .3rem;
+}
