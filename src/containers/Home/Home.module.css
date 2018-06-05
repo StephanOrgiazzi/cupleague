@@ -10,16 +10,19 @@
     margin: 0 auto;
 }
 
+@media screen and (min-width: 640px) {
+    .homeWrapper {
+        width: 400px;
+        margin: 0 auto;
+    }
+}
+
 .buttonsWrapper {
     padding: 1rem 0;
     border-bottom: 2px solid #fff;
 }
 
 .buttonsWrapper button {
-    background-color: #C60000;
-    color: white;
-    text-transform: uppercase;
-    border-radius: 18px;
     margin: 1rem 0;
 }
 

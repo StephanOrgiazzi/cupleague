@@ -1,12 +1,18 @@
 .Game {
     display: flex;
     justify-content: center;
+    border-bottom: 2px solid #fff;
+    padding: 1rem 0;
+}
+
+.Game:last-of-type {
+    border-bottom: none;
 }
 
 .Game img {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
+    width: 4.5rem;
+    height: 3rem;
+    border-radius: 10px;
 }
 
 .countryA, .countryB {
@@ -21,14 +27,30 @@
 
 .currentScore {
     margin: 0 1rem;
-    width: 2.5rem;
-    height: 2.5rem;
     background-color: #fff;
     color: black;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    border-radius: 12px;
+    border-radius: 10px;
+    -o-appearance: none;
+    -ms-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 3rem;
+    height: 3rem;
+    padding: 0 0 0 17px;
+    border: none;
 }
+
+
+@media screen and (max-width: 361px) {
+    .currentScore {
+        margin: 0 .5rem;
+        padding: 0 0 0 13px;
+    }
+}
+
 
 .info {
     display: flex;
@@ -57,7 +79,8 @@
 
 .dash {
     align-self: center;
-    margin-bottom: 4rem;
+    position: relative;
+    bottom: 33px;
     font-size: 3rem;
     font-weight: 600;
 }

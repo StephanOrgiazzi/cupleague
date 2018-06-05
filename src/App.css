@@ -88,3 +88,18 @@
   margin: 0 auto;
   padding: .3rem;
 }
+
+/* Global styles  */
+
+button {
+  width: 100%;
+  color: #fff;
+  border: none;
+  margin: 2rem 0;
+  padding: 1rem;
+  font-weight: 500;
+  background-color: #C60000;
+  text-transform: uppercase;
+  border-radius: 30px;
+  cursor: pointer;
+}

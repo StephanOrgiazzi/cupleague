@@ -72,7 +72,7 @@ class App extends Component {
                     <Link to="/" onClick={() => this.closeMenuHandler} >Accueil</Link>
                     <Link to="/login" onClick={() => this.closeMenuHandler}>Connexion</Link>
                     <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
-                    <Link to="/rank" onClick={() => this.closeMenuHandler}>Mon classement</Link>
+                    <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link>
                     <a href="/">Fifa'lten</a>
                 </Menu>
                 <Header />

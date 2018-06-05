@@ -7,22 +7,23 @@ h3 {
     font-weight: 400;
 }
 
-.formWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.authWrapper {
+    width: 90%;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 640px) {
+    .authWrapper {
+        width: 450px;
+        margin: 0 auto;
+    }
 }
 
 .form {
     width: 100%;
 }
 
-button {
-    width: 100%;
-    background-color: teal;
-    color: #fff;
-    border: none;
-    margin: 2rem 0;
-    padding: .7rem;
+.changeAuth {
+    text-decoration: underline;
+    cursor: pointer;
 }

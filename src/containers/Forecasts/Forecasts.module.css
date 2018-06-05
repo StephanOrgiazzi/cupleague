@@ -1,0 +1,35 @@
+.Forecasts {
+    background: lightgrey;
+    background-size: cover;
+    text-align: center;
+    color: #fff;
+}
+
+.forecastsWrapper {
+    width: 90%;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 640px) {
+    .forecastsWrapper {
+        width: 450px;
+        margin: 0 auto;
+    }
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title h3 {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.title img {
+    width: 2rem;
+    height: 2rem;
+    margin: 1rem;
+}
