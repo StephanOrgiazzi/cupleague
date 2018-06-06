@@ -22,6 +22,7 @@ class App extends Component {
 
     state = {
         menuOpen: false,
+        data: ''
     }
 
     async componentDidMount() {
@@ -29,6 +30,16 @@ class App extends Component {
         try {
             const res = await axios.get('https://altencup-dev.firebaseio.com/users.json');
             console.log(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+        try {
+            const res = await axios.get('https://cors-anywhere.herokuapp.com/http://livescore-api.com/api-client/fixtures/matches.json?key=Tk3aVqlzkk4qm9eO&secret=OwUcVM64dtw9GjCzDFKz659qpdRLm5Aa&league=793');
+            const data = res.data.data.fixtures;
+            this.setState({
+                data: data
+            });
+
         } catch (err) {
             console.log(err);
         }
@@ -55,9 +66,9 @@ class App extends Component {
 
         let routes = (
             <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" render={() => <Home data={this.state.data} />} />
                 <Route exact path="/login" component={Auth} />
-                <Route exact path="/forecasts" component={Forecasts} />
+                <Route exact path="/forecasts" render={() => <Forecasts data={this.state.data} />} />
                 <Route exact path="/rank" component={Rank} />
                 <Redirect to="/" />
             </Switch>
