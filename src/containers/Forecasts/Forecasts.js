@@ -8,7 +8,6 @@ import styles from './Forecasts.module.css';
 
 class Forecasts extends Component {
 
-
     render() {
         return (
             <div className={styles.Forecasts}>
@@ -18,8 +17,8 @@ class Forecasts extends Component {
                         <h3>Matchs à venir</h3>
                         <img src={ball} alt="soccer ball" />
                     </div>
-                    {this.props.data ? this.props.data.map((game, index) => {
-                        return <Game data={game} key={index}/>}) : <Spinner />
+                    {this.props.matches && this.props.teams && this.props.stadiums ? this.props.matches.map((game, index) => {
+                        return <Game match={this.props.matches[index]} teams={this.props.teams} stadiums={this.props.stadiums} key={index} />}) : <Spinner />
                     }
                 </div>
             </div>

@@ -14,32 +14,74 @@ import { slide as Menu } from 'react-burger-menu';
 
 import { Route, Switch, Redirect, Link, withRouter } from "react-router-dom";
 
-import mondial10 from './assets/mondial.png';
-import punchline from './assets/punchline.png';
-import yammer from './assets/yammer.png';
+import logoburger from './assets/logoburger.png';
 
 class App extends Component {
 
     state = {
         menuOpen: false,
-        data: ''
+        matches: '',
+        teams: '',
+        stadiums: ''
     }
 
     async componentDidMount() {
+
         this.props.onTryAutoSignup();
+
         try {
             const res = await axios.get('https://altencup-dev.firebaseio.com/users.json');
             console.log(res.data);
         } catch (err) {
             console.log(err);
         }
-        try {
-            const res = await axios.get('https://cors-anywhere.herokuapp.com/http://livescore-api.com/api-client/fixtures/matches.json?key=Tk3aVqlzkk4qm9eO&secret=OwUcVM64dtw9GjCzDFKz659qpdRLm5Aa&league=793');
-            const data = res.data.data.fixtures;
-            this.setState({
-                data: data
-            });
 
+        try {
+            const res = await axios.get('https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json');
+            const data = res.data;
+            const now = new Date()
+            const matchesToSort = [];
+
+            for (let pool in data.groups) {
+                data.groups[pool].matches.map(match => {
+                    if (new Date(match.date).getTime() > now) {
+                        matchesToSort.push(match);
+                    }
+                    return null;
+                })
+            }
+
+            if (now > new Date("2018-06-28T20:00:00+02:00").getTime()) {
+                for (let round in data.knockout) {
+                    console.log(data.knockout[round]);
+                    data.knockout[round].matches.map(match => {
+                        if (new Date(match.date).getTime() > now) {
+                            matchesToSort.push(match)
+                        }
+                        return null;
+                    })
+                }
+            }
+
+            // Sorting Algorithm
+            const mapped = matchesToSort.map((e, i) => {
+                return { index: i, value: new Date(e.date).getTime() };
+            })
+            mapped.sort((a, b) => {
+                if (a.value > b.value) { return 1 }
+                if (a.value < b.value) { return -1; }
+                return 0;
+            });
+            const result = mapped.map(el => {
+                return matchesToSort[el.index];
+            });
+            console.log(result);
+            this.setState({
+                ...this.state,
+                matches: result,
+                teams: data.teams,
+                stadiums: data.stadiums
+            })
         } catch (err) {
             console.log(err);
         }
@@ -66,9 +108,9 @@ class App extends Component {
 
         let routes = (
             <Switch>
-                <Route exact path="/" render={() => <Home data={this.state.data} />} />
+                <Route exact path="/" render={() => <Home matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
                 <Route exact path="/login" component={Auth} />
-                <Route exact path="/forecasts" render={() => <Forecasts data={this.state.data} />} />
+                <Route exact path="/forecasts" render={() => <Forecasts matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
                 <Route exact path="/rank" component={Rank} />
                 <Redirect to="/" />
             </Switch>
@@ -77,14 +119,12 @@ class App extends Component {
         return (
             <div className="App">
                 <Menu isOpen={this.state.menuOpen} className="Menu">
-                    <img src={mondial10} className='menu-mondial' alt='Logo Mondial10' />
-                    <img src={punchline} className='menu-punchline' alt='Logo Pariez Gagnez' />
-                    <img src={yammer} className='menu-yammer' alt='Logo Yammer' />
+                    <img src={logoburger} className='logoburger' alt='Logos Mondial10 et Yammer' />
                     <Link to="/" onClick={() => this.closeMenuHandler} >Accueil</Link>
                     <Link to="/login" onClick={() => this.closeMenuHandler}>Connexion</Link>
                     <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
                     <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link>
-                    <a href="/">Fifa'lten</a>
+                    <a href="/">Fifa'lten<span>(Forum, Classements, Communautés...)</span></a>
                 </Menu>
                 <Header />
                 {routes}

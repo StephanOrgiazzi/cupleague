@@ -65,6 +65,7 @@ class Auth extends Component {
             input: {
                 ...inputStyles,
                 width: '100%',
+                background:' transparent'
             },
             label: {
                 ...labelStyles,

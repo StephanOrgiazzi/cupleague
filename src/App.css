@@ -23,8 +23,9 @@
 /* Color/shape of burger icon bars */
 
 .bm-burger-bars {
-  background: #373a47;
+  background: #fff;
   height: 12% !important;
+  border-radius: 10px;
 }
 
 /* Position and sizing of clickable cross button */
@@ -38,6 +39,10 @@
 
 .bm-cross {
   background: #bdc3c7;
+}
+
+.bm-cross-button button {
+  box-shadow: none;
 }
 
 /* General sidebar styles */
@@ -58,8 +63,20 @@
 /* Wrapper for item list */
 
 .bm-item-list {
-  color: #b8b7ad;
+  color: #102336;
   padding: 0.8em;
+  font-size: 24px;
+  font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.bm-item-list a span {
+  display: block;
+  font-size: 1rem;
+  margin-top: -.2rem;
+}
+
+.bm-item-list a:hover {
+  text-decoration: underline;
 }
 
 /* Styling of overlay */
@@ -68,25 +85,10 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-.menu-mondial {
-  width: 150px;
-  height: 28px;
+.logoburger {
+  width: 200px;
+  height: 125px;
   margin: 0 auto;
-  padding: .3rem;
-}
-
-.menu-punchline {
-  width: 150px;
-  height: 28px;
-  margin: 0 auto;
-  padding: .3rem;
-}
-
-.menu-yammer {
-  width: 90px;
-  height: 18px;
-  margin: 0 auto;
-  padding: .3rem;
 }
 
 /* Global styles  */
@@ -96,15 +98,14 @@ button {
   color: #fff;
   border: none;
   margin: 2rem 0;
-  padding: 1rem;
+  padding: .4rem 1rem;
   font-weight: 500;
   background-color: #C60000;
   text-transform: uppercase;
   border-radius: 30px;
   cursor: pointer;
+  font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 33px;
+  border-bottom: 3px solid #7E0303;
+  box-shadow: 3px 3px 3px gray;
 }
-
-/* border-bottom 
-3px de hauteur
-shadow: rgba 0 0 0 50
-/* #7E0303 */ 

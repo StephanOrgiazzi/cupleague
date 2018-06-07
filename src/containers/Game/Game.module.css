@@ -43,14 +43,12 @@
     border: none;
 }
 
-
 @media screen and (max-width: 361px) {
     .currentScore {
         margin: 0 .5rem;
         padding: 0 0 0 13px;
     }
 }
-
 
 .info {
     display: flex;
@@ -61,8 +59,9 @@
 
 .countryName {
     text-transform: uppercase;
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-family: Pop_Warner, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: 400;
+    font-size: 1.2rem;
 }
 
 .date, .groupPlace {
@@ -78,9 +77,10 @@
 }
 
 .dash {
+    font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     align-self: center;
     position: relative;
-    bottom: 33px;
-    font-size: 3rem;
-    font-weight: 600;
+    bottom: 20px;
+    font-size: 4rem;
+    font-weight: 400;
 }

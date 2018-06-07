@@ -1,34 +1,61 @@
 import React, { Component } from 'react';
 import styles from './Game.module.css';
+import { connect } from 'react-redux';
+import axios from 'axios';
+
 
 class Game extends Component {
 
     state = {
-        team1: 'null',
-        team2: null,
+        home_team_forecast: null,
+        away_team_forecast: null,
     }
 
-    onChangeTeam1Handler = (event) => {
+    onChangeHomeTeamHandler = (event) => {
         this.setState({
             ...this.state,
-            team1: event.target.value
-        }, console.log('team1:', this.state.team1));
+            home_team_forecast: event.target.value
+        });
     }
 
-    onChangeTeam2Handler = (event) => {
+    onChangeAwayTeamHandler = (event) => {
         this.setState({
             ...this.state,
-            team2: event.target.value
-        }, console.log('team2:', this.state.team2));
+            away_team_forecast: event.target.value
+        });
     }
+
+    async postForecastsTeams() {
+        if (this.state.home_team_forecast && this.state.away_team_forecast) {
+            const data = {
+                name: this.props.match.name,
+                home_team: this.props.match.home_team,
+                away_team: this.props.match.away_team,
+                home_team_forecast: this.state.home_team_forecast,
+                away_team_forecast: this.state.away_team_forecast,
+                match_date: this.props.match.date,
+                forecast_date: new Date().getTime()
+            }
+            try {
+                const res = await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data)
+                console.log(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
+
 
     render() {
+
+        this.postForecastsTeams()
+
         return (
             <div className={styles.Game}>
                 <div className={styles.countryA}>
                     <div className={styles.score}>
-                        <img src={require(`../../assets/FLAGS/${this.props.data.home_name.replace(/\s/g, '').toUpperCase()}.png`)} alt="Flag" />
-                        <select className={styles.currentScore} onChange={this.onChangeTeam1Handler}>
+                        <img src={this.props.teams[(this.props.match.home_team) - 1].flag} alt="Flag" />
+                        <select className={styles.currentScore} onChange={this.onChangeHomeTeamHandler}>
                             <option value="null">..</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
@@ -40,17 +67,17 @@ class Game extends Component {
                     </div>
                     <div className={styles.info}>
                         <span className={styles.countryName}>
-                            {this.props.data.home_name}
+                            {this.props.teams[(this.props.match.home_team) - 1].name}
                         </span>
                         <span className={styles.date}>
-                        {this.props.data.date}, {this.props.data.time.slice(0, -3)}
+                            {this.props.match.date.slice(0, -15)}
                         </span>
                     </div>
                 </div>
                 <span className={styles.dash}>-</span>
                 <div className={styles.countryB}>
                     <div className={styles.score}>
-                        <select className={styles.currentScore} onChange={this.onChangeTeam2Handler}>
+                        <select className={styles.currentScore} onChange={this.onChangeAwayTeamHandler}>
                             <option value="null">..</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
@@ -59,15 +86,15 @@ class Game extends Component {
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
-                        <img src={require(`../../assets/FLAGS/${this.props.data.away_name.replace(/\s/g, '').toUpperCase()}.png`)} alt="Flag" />
+                        <img src={this.props.teams[(this.props.match.away_team) - 1].flag} alt="Flag" />
                     </div>
                     <div className={styles.info}>
                         <span className={styles.countryName}>
-                        {this.props.data.away_name}
-                    </span>
+                            {this.props.teams[(this.props.match.away_team) - 1].name}
+                        </span>
                         <span className={styles.groupPlace}>
-                        {(this.props.data.location).split(', ')[1]}
-                    </span>
+                            {this.props.stadiums[(this.props.match.stadium) - 1].city}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -75,4 +102,11 @@ class Game extends Component {
     }
 }
 
-export default Game;
+const mapStateToProps = (state) => {
+    return {
+        userId: state.auth_reducer.userId,
+        token:state.auth_reducer.token
+    }
+}
+
+export default connect(mapStateToProps, null)(Game);
