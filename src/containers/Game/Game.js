@@ -11,34 +11,61 @@ class Game extends Component {
         away_team_forecast: null,
     }
 
+    async componentDidMount() {
+        try {
+            const res = await axios.get(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts.json?auth=${this.props.token}`);
+            const data = res.data;
+            this.setState({
+                data: data
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     onChangeHomeTeamHandler = (event) => {
         this.setState({
             ...this.state,
             home_team_forecast: event.target.value
-        });
+        }, this.postHomeTeam);
     }
 
     onChangeAwayTeamHandler = (event) => {
         this.setState({
             ...this.state,
             away_team_forecast: event.target.value
-        });
+        }, this.postAwayTeam);
     }
 
-    async postForecastsTeams() {
-        if (this.state.home_team_forecast && this.state.away_team_forecast) {
+    async postHomeTeam() {
+        if (this.state.home_team_forecast) {
             const data = {
                 name: this.props.match.name,
                 home_team: this.props.match.home_team,
-                away_team: this.props.match.away_team,
                 home_team_forecast: this.state.home_team_forecast,
+                match_date: this.props.match.date,
+                forecast_date: new Date().getTime()
+            }
+            try {
+                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+    }
+
+    async postAwayTeam() {
+        if (this.state.away_team_forecast) {
+            const data = {
+                name: this.props.match.name,
+                home_team: this.props.match.home_team,
                 away_team_forecast: this.state.away_team_forecast,
                 match_date: this.props.match.date,
                 forecast_date: new Date().getTime()
             }
             try {
-                const res = await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data)
-                console.log(res.data);
+                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data)
             } catch (err) {
                 console.log(err);
             }
@@ -48,22 +75,22 @@ class Game extends Component {
 
     render() {
 
-        this.postForecastsTeams()
+        // Set forecasts
+        const matchName = (Number(this.props.match.name));
+        let homeTeamPlaceholder = '...';
+        let awayTeamPlaceholder = '...';
+        if (this.state.data && this.state.data.hasOwnProperty(matchName)) {
+            homeTeamPlaceholder = this.state.data[matchName].home_team_forecast;
+            awayTeamPlaceholder = this.state.data[matchName].away_team_forecast;
+        }
 
         return (
+
             <div className={styles.Game}>
                 <div className={styles.countryA}>
                     <div className={styles.score}>
                         <img src={this.props.teams[(this.props.match.home_team) - 1].flag} alt="Flag" />
-                        <select className={styles.currentScore} onChange={this.onChangeHomeTeamHandler}>
-                            <option value="null">..</option>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        <input type="text" name="currentScore" placeholder={homeTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeHomeTeamHandler} pattern="[0-9]+" title="numbers only" />
                     </div>
                     <div className={styles.info}>
                         <span className={styles.countryName}>
@@ -77,15 +104,7 @@ class Game extends Component {
                 <span className={styles.dash}>-</span>
                 <div className={styles.countryB}>
                     <div className={styles.score}>
-                        <select className={styles.currentScore} onChange={this.onChangeAwayTeamHandler}>
-                            <option value="null">..</option>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        <input type="text" name="currentScore" placeholder={awayTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeAwayTeamHandler} pattern="[0-9]+" title="number only" />
                         <img src={this.props.teams[(this.props.match.away_team) - 1].flag} alt="Flag" />
                     </div>
                     <div className={styles.info}>
@@ -105,7 +124,7 @@ class Game extends Component {
 const mapStateToProps = (state) => {
     return {
         userId: state.auth_reducer.userId,
-        token:state.auth_reducer.token
+        token: state.auth_reducer.token
     }
 }
 

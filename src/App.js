@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './App.css';
 
 import axios from './axios';
@@ -7,6 +7,7 @@ import Header from './containers/Header/Header';
 import Home from './containers/Home/Home';
 import Rank from './containers/Rank/Rank';
 import Forecasts from './containers/Forecasts/Forecasts';
+import Logout from './containers/Logout/Logout';
 import * as actionTypes from "./store/actions/auth";
 import { connect } from 'react-redux';
 
@@ -16,25 +17,21 @@ import { Route, Switch, Redirect, Link, withRouter } from "react-router-dom";
 
 import logoburger from './assets/logoburger.png';
 
-class App extends Component {
+class App extends PureComponent {
 
     state = {
         menuOpen: false,
         matches: '',
         teams: '',
-        stadiums: ''
+        stadiums: '',
+        firstName: '',
+        lastName: '',
+        points: ''
     }
 
     async componentDidMount() {
 
         this.props.onTryAutoSignup();
-
-        try {
-            const res = await axios.get('https://altencup-dev.firebaseio.com/users.json');
-            console.log(res.data);
-        } catch (err) {
-            console.log(err);
-        }
 
         try {
             const res = await axios.get('https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json');
@@ -75,7 +72,6 @@ class App extends Component {
             const result = mapped.map(el => {
                 return matchesToSort[el.index];
             });
-            console.log(result);
             this.setState({
                 ...this.state,
                 matches: result,
@@ -84,6 +80,21 @@ class App extends Component {
             })
         } catch (err) {
             console.log(err);
+        }
+
+        // Get user info
+        if (this.props.token) {
+            try {
+                const res = await axios.get(`https://altencup-dev.firebaseio.com/users/${this.props.userId}.json?auth=${this.props.token}`);
+                const data = res.data;
+                this.setState({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    points: data.points
+                })
+            } catch (err) {
+                console.log('header', err);
+            }
         }
     }
 
@@ -108,8 +119,10 @@ class App extends Component {
 
         let routes = (
             <Switch>
+
                 <Route exact path="/" render={() => <Home matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
                 <Route exact path="/login" component={Auth} />
+                <Route exact path="/logout" component={Logout} />
                 <Route exact path="/forecasts" render={() => <Forecasts matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
                 <Route exact path="/rank" component={Rank} />
                 <Redirect to="/" />
@@ -120,13 +133,25 @@ class App extends Component {
             <div className="App">
                 <Menu isOpen={this.state.menuOpen} className="Menu">
                     <img src={logoburger} className='logoburger' alt='Logos Mondial10 et Yammer' />
-                    <Link to="/" onClick={() => this.closeMenuHandler} >Accueil</Link>
-                    <Link to="/login" onClick={() => this.closeMenuHandler}>Connexion</Link>
-                    <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
+                    {this.props.token &&
+                        <Link to="/" onClick={() => this.closeMenuHandler} >Accueil</Link>
+                    }
+                    {!this.props.token &&
+                        <Link to="/login" onClick={() => this.closeMenuHandler}>Connexion</Link>
+                    }
+                    {this.props.token &&
+                        <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
+                    }
                     <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link>
-                    <a href="/">Fifa'lten<span>(Forum, Classements, Communautés...)</span></a>
+                    <a href="https://www.yammer.com/altengroup.eu/#/threads/inGroup?type=in_group&feedId=13919000" target="_blank" rel="noopener noreferrer">Fifa'lten<span>(Forum, Classements, Communautés...)</span></a>
+                    {this.props.token &&
+                        <Link to="/logout" onClick={() => this.closeMenuHandler}>Se déconnecter</Link>
+                    }
                 </Menu>
-                <Header />
+                <Header
+                    lastName={this.state.lastName}
+                    firstName={this.state.firstName}
+                    points={this.state.points} />
                 {routes}
             </div>
         );
@@ -139,4 +164,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+const mapStateToProps = (state) => {
+    return {
+        token: state.auth_reducer.token,
+        userId: state.auth_reducer.userId,
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

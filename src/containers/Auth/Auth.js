@@ -9,6 +9,7 @@ import FloatingLabel, {
 } from 'floating-label-react';
 import styles from './Auth.module.css';
 import * as actionTypes from "../../store/actions/auth.js";
+import { Redirect, withRouter } from 'react-router-dom';
 
 
 class Auth extends Component {
@@ -36,7 +37,6 @@ class Auth extends Component {
             default:
                 return '';
         }
-        console.log(this.state);
     }
 
     onSubmitHandler = (event) => {
@@ -56,16 +56,16 @@ class Auth extends Component {
         const inputStyle = {
             floating: {
                 ...floatingStyles,
-                color: '#0680C9'
+                color: '#FFEB00'
             },
             focus: {
                 ...focusStyles,
-                borderColor: '#0680C9'
+                borderColor: '#FFEB00'
             },
             input: {
                 ...inputStyles,
                 width: '100%',
-                background:' transparent'
+                background: ' transparent'
             },
             label: {
                 ...labelStyles,
@@ -87,6 +87,8 @@ class Auth extends Component {
                         styles={inputStyle}
                         type='email'
                         onChange={(event) => this.onChangeHandler(event, 'email')}
+                        pattern="\S+\.\S+@\S*alten\S*\.\S+"
+                        title="Veuiller rentrer votre adresse email alten"
                         required
                     />
                     <FloatingLabel
@@ -113,9 +115,12 @@ class Auth extends Component {
         return (
             <div className={styles.Auth}>
                 <div className={styles.authWrapper}>
-                    <h3>{this.state.isSignedUp ? 'Connexion' : 'Compte'}</h3>
+                    <h3>{this.state.isSignedUp ? 'Connexion' : 'Création de compte'}</h3>
                     {!this.state.isSignedUp &&
-                        <p>Créez un compte pour commencer à faire vos pronostics !</p>
+                        <p>Créez un compte avec votre adresse email alten pour commencer à faire vos pronostics !</p>
+                    }
+                    {this.props.token &&
+                        <Redirect to='/' />
                     }
                     {form}
                 </div>
@@ -126,7 +131,8 @@ class Auth extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.auth_reducer.loading
+        loading: state.auth_reducer.loading,
+        token: state.auth_reducer.token
     }
 }
 
@@ -136,4 +142,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));

@@ -30,7 +30,7 @@
     background-color: #fff;
     color: black;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 400;
     border-radius: 10px;
     -o-appearance: none;
     -ms-appearance: none;
@@ -39,14 +39,22 @@
     appearance: none;
     width: 3rem;
     height: 3rem;
-    padding: 0 0 0 17px;
     border: none;
+    text-align: center;
+    padding: 0 1 0 0px;
+}
+
+.currentScore::placeholder {
+    color: black;
+}
+
+.currentScore:focus::placeholder {
+    color: transparent;
 }
 
 @media screen and (max-width: 361px) {
     .currentScore {
         margin: 0 .5rem;
-        padding: 0 0 0 13px;
     }
 }
 
@@ -65,7 +73,8 @@
 }
 
 .date, .groupPlace {
-    font-weight: 300;
+    font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1.2rem;
 }
 
 .countryB .info {

@@ -8,8 +8,6 @@ class Home extends Component {
 
     render() {
 
-        console.log('Home', this.props.stadiums);
-        
 
         return (
             <div className={styles.Home}>
