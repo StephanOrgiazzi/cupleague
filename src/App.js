@@ -5,6 +5,7 @@ import axios from './axios';
 import Auth from './containers/Auth/Auth';
 import Header from './containers/Header/Header';
 import Home from './containers/Home/Home';
+import Bets from './containers/Bets/Bets';
 import Rank from './containers/Rank/Rank';
 import Forecasts from './containers/Forecasts/Forecasts';
 import Logout from './containers/Logout/Logout';
@@ -121,6 +122,7 @@ class App extends PureComponent {
             <Switch>
 
                 <Route exact path="/" render={() => <Home matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
+                <Route exact path="/bets" render={() => <Bets teams={this.state.teams}  />} />
                 <Route exact path="/login" component={Auth} />
                 <Route exact path="/logout" component={Logout} />
                 <Route exact path="/forecasts" render={() => <Forecasts matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
@@ -142,7 +144,7 @@ class App extends PureComponent {
                     {this.props.token &&
                         <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
                     }
-                    <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link>
+                   {/*  <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link> */}
                     <a href="https://www.yammer.com/altengroup.eu/#/threads/inGroup?type=in_group&feedId=13919000" target="_blank" rel="noopener noreferrer">Fifa'lten<span>(Forum, Classements, Communautés...)</span></a>
                     {this.props.token &&
                         <Link to="/logout" onClick={() => this.closeMenuHandler}>Se déconnecter</Link>

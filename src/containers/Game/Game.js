@@ -12,6 +12,7 @@ class Game extends Component {
     }
 
     async componentDidMount() {
+
         try {
             const res = await axios.get(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts.json?auth=${this.props.token}`);
             const data = res.data;
@@ -24,17 +25,25 @@ class Game extends Component {
     }
 
     onChangeHomeTeamHandler = (event) => {
-        this.setState({
-            ...this.state,
-            home_team_forecast: event.target.value
-        }, this.postHomeTeam);
+        const reg = /^\d+$/;
+        let regTest = reg.test(event.target.value);
+        if (regTest) {
+            this.setState({
+                ...this.state,
+                home_team_forecast: event.target.value
+            }, this.postHomeTeam);
+        }
     }
 
     onChangeAwayTeamHandler = (event) => {
-        this.setState({
-            ...this.state,
-            away_team_forecast: event.target.value
-        }, this.postAwayTeam);
+        const reg = /^\d+$/;
+        let regTest = reg.test(event.target.value);
+        if (regTest) {
+            this.setState({
+                ...this.state,
+                away_team_forecast: event.target.value
+            }, this.postAwayTeam);
+        }
     }
 
     async postHomeTeam() {
@@ -47,12 +56,14 @@ class Game extends Component {
                 forecast_date: new Date().getTime()
             }
             try {
-                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data)
+                this.preventClick();
+                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
+                this.authorizeClick();
             } catch (err) {
                 console.log(err);
+                this.authorizeClick();
             }
         }
-
     }
 
     async postAwayTeam() {
@@ -65,18 +76,35 @@ class Game extends Component {
                 forecast_date: new Date().getTime()
             }
             try {
-                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data)
+                this.preventClick();
+                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
+                this.authorizeClick();
             } catch (err) {
                 console.log(err);
+                this.authorizeClick();
+
             }
         }
     }
+
+    click = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    preventClick = (e) => {
+        document.body.addEventListener("click", this.click);
+    };
+
+    authorizeClick = (e) => {
+        document.body.removeEventListener("click", this.click);
+    };
 
 
     render() {
 
         // Set forecasts
-        const matchName = (Number(this.props.match.name));
+        const matchName = this.props.match.name;
         let homeTeamPlaceholder = '...';
         let awayTeamPlaceholder = '...';
         if (this.state.data && this.state.data.hasOwnProperty(matchName)) {

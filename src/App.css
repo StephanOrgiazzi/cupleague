@@ -26,6 +26,7 @@
   background: #fff;
   height: 12% !important;
   border-radius: 10px;
+  box-shadow: 2px 2px 4px grey;
 }
 
 /* Position and sizing of clickable cross button */

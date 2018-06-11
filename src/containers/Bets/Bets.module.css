@@ -1,0 +1,61 @@
+.Bets {
+    text-align: center;
+    color: #fff;
+}
+
+.betsWrapper {
+    width: 90%;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 640px) {
+    .betsWrapper {
+        width: 400px;
+        margin: 0 auto;
+    }
+}
+
+.betsForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.betsWrapper h3 {
+    margin: 1rem auto;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #E00000;
+}
+
+.betsForm input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.betsForm label {
+    text-align: left;
+    color: #ffeb00;
+    text-shadow: 1px 1px 3px gray;
+    font-size: .9rem;
+}
+
+.betsForm input, .betsForm select {
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+}
+
+.betsForm select  {
+    text-indent: 20px;
+}
+
+.warning {
+    font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color: black;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}
