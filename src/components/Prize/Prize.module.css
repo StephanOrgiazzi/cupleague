@@ -1,0 +1,44 @@
+.Welcome {
+    text-align: center;
+    color: black;
+    font-size: 1.1rem;
+    font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.welcomeWrapper {
+    width: 90%;
+    margin: 1rem auto;
+}
+
+.welcomeBox {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px gray;
+}
+
+.welcomeBox h3 {
+    text-decoration: underline
+}
+
+.welcomeBox ul {
+    list-style: none;
+    text-align: left;
+}
+
+.welcomeBox ul span {
+    color: gold;
+    font-weight: 500;
+}
+
+.prize2 {
+    color: silver !important;
+}
+
+.prize3 {
+    color: #CD7F32 !important;
+}
+
+.prize4, .prize5, .prize6, .prize7 {
+    color: black !important;
+}

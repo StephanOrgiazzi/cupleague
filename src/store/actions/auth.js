@@ -38,14 +38,12 @@ export const auth = (email, password, isSignedUp) => {
             password: password,
             returnSecureToken: true
         }
-        console.log(authData)
         let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyAndA-J8NBc98Ky-6FxuOib3qMTVUI5JWU';
         if (isSignedUp) {
             url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyAndA-J8NBc98Ky-6FxuOib3qMTVUI5JWU'
         }
         axios.post(url, authData)
             .then(response => {
-                console.log(response);
                 localStorage.setItem('token', response.data.idToken);
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
                 localStorage.setItem('expirationDate', expirationDate);

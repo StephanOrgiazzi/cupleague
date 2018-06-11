@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../../components/Spinner/Spinner';
 import FloatingLabel, {
@@ -12,7 +12,7 @@ import * as actionTypes from "../../store/actions/auth.js";
 import { Redirect, withRouter } from 'react-router-dom';
 
 
-class Auth extends Component {
+class Auth extends PureComponent {
 
     state = {
         email: '',
@@ -117,10 +117,10 @@ class Auth extends Component {
                 <div className={styles.authWrapper}>
                     <h3>{this.state.isSignedUp ? 'Connexion' : 'Création de compte'}</h3>
                     {!this.state.isSignedUp &&
-                        <p>Créez un compte avec votre adresse email alten pour commencer à faire vos pronostics !</p>
+                        <p>Créez un compte avec votre adresse email Alten pour commencer à faire vos pronostics !</p>
                     }
                     {this.props.token &&
-                        <Redirect to='/' />
+                        <Redirect to='/welcome' />
                     }
                     {form}
                 </div>

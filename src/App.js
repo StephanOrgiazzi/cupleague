@@ -3,6 +3,9 @@ import './App.css';
 
 import axios from './axios';
 import Auth from './containers/Auth/Auth';
+import Welcome from './components/Welcome/Welcome';
+import Scoring from './components/Scoring/Scoring';
+import Prize from './components/Prize/Prize';
 import Header from './containers/Header/Header';
 import Home from './containers/Home/Home';
 import Bets from './containers/Bets/Bets';
@@ -27,7 +30,8 @@ class App extends PureComponent {
         stadiums: '',
         firstName: '',
         lastName: '',
-        points: ''
+        points: '',
+        bets: null
     }
 
     async componentDidMount() {
@@ -91,7 +95,8 @@ class App extends PureComponent {
                 this.setState({
                     firstName: data.firstName,
                     lastName: data.lastName,
-                    points: data.points
+                    points: data.points,
+                    bets: data.bets
                 })
             } catch (err) {
                 console.log('header', err);
@@ -105,8 +110,8 @@ class App extends PureComponent {
             team2: '3'
         }
         try {
-            const res = await axios.patch('/test.json', data)
-            console.log(res.data);
+            const res = await axios.patch('/test.json', data);
+            return res;
         } catch (err) {
             console.log(err);
         }
@@ -120,11 +125,13 @@ class App extends PureComponent {
 
         let routes = (
             <Switch>
-
-                <Route exact path="/" render={() => <Home matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
-                <Route exact path="/bets" render={() => <Bets teams={this.state.teams}  />} />
-                <Route exact path="/login" component={Auth} />
+                <Route exact path="/home" render={() => <Home matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
+                <Route exact path="/bets" render={() => <Bets teams={this.state.teams} />} />
+                <Route exact path="/" render={() => <Auth bets={this.state.bets} />} />
                 <Route exact path="/logout" component={Logout} />
+                <Route exact path="/welcome" component={Welcome} />
+                <Route exact path="/scoring" component={Scoring} />
+                <Route exact path="/prize" component={Prize} />
                 <Route exact path="/forecasts" render={() => <Forecasts matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
                 <Route exact path="/rank" component={Rank} />
                 <Redirect to="/" />
@@ -135,16 +142,17 @@ class App extends PureComponent {
             <div className="App">
                 <Menu isOpen={this.state.menuOpen} className="Menu">
                     <img src={logoburger} className='logoburger' alt='Logos Mondial10 et Yammer' />
-                    {this.props.token &&
-                        <Link to="/" onClick={() => this.closeMenuHandler} >Accueil</Link>
+                    {this.props.token && (this.state.bets) &&
+                        <Link to="/Home" onClick={() => this.closeMenuHandler} >Accueil</Link>
                     }
                     {!this.props.token &&
-                        <Link to="/login" onClick={() => this.closeMenuHandler}>Connexion</Link>
+                        <Link to="/" onClick={() => this.closeMenuHandler}>Connexion</Link>
                     }
-                    {this.props.token &&
+                    {/*                     {this.props.token &&
                         <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
-                    }
-                   {/*  <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link> */}
+                    } */}
+                    {/*  <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link> */}
+                    <Link to="/welcome" onClick={() => this.closeMenuHandler}>Règles</Link>
                     <a href="https://www.yammer.com/altengroup.eu/#/threads/inGroup?type=in_group&feedId=13919000" target="_blank" rel="noopener noreferrer">Fifa'lten<span>(Forum, Classements, Communautés...)</span></a>
                     {this.props.token &&
                         <Link to="/logout" onClick={() => this.closeMenuHandler}>Se déconnecter</Link>

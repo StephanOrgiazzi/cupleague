@@ -27,6 +27,10 @@
     color: #E00000;
 }
 
+.betsWrapper p {
+    text-shadow: 1px 1px 1px gray;
+}
+
 .betsForm input {
     display: flex;
     flex-direction: column;
@@ -37,7 +41,7 @@
 .betsForm label {
     text-align: left;
     color: #ffeb00;
-    text-shadow: 1px 1px 3px gray;
+    text-shadow: 1px 1px 1px gray;
     font-size: .9rem;
 }
 
