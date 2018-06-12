@@ -20,7 +20,7 @@ html {
 
 @media screen and (min-width: 640px) {
   html {
-    background: rgba(117, 190, 218, 0.0) url("assets/backgroundfade.jpg") bottom center no-repeat;
+    background: rgba(117, 190, 218, 0.0) url("assets/backgroundfade.jpg") center center no-repeat;
     background-size: cover;
     background-attachment: fixed;
     width: 100%;

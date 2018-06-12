@@ -14,7 +14,7 @@ class Home extends Component {
                 <div className={styles.homeWrapper}>
                     <div className={styles.buttonsWrapper}>
                         <Link to="/forecasts"><button>Mes pronostics</button></Link>
-                        <Link to="/rank"><button>Mon classement</button></Link>
+                       {/*  <Link to="/rank"><button>Mon classement</button></Link> */}
                     </div>
                     <h3>Prochain match</h3>
                     {this.props.matches && this.props.teams && this.props.stadiums ? <Game match={this.props.matches[0]} teams={this.props.teams} stadiums={this.props.stadiums} /> : <Spinner />}

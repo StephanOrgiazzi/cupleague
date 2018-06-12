@@ -110,3 +110,7 @@ button {
   border-bottom: 3px solid #7E0303;
   box-shadow: 3px 3px 3px gray;
 }
+
+h3, p, span {
+  text-shadow: 1px 1px 1px lightgray;
+}

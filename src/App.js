@@ -103,6 +103,7 @@ class App extends PureComponent {
                 console.log('header', err);
             }
         }
+
     }
 
     async buttonClickHandler() {
@@ -144,7 +145,7 @@ class App extends PureComponent {
             <div className="App">
                 <Menu isOpen={this.state.menuOpen} className="Menu">
                     <img src={logoburger} className='logoburger' alt='Logos altencup-dev et Yammer' />
-                    {this.props.token &&
+                    {this.props.token && 
                         <Link to="/Home" onClick={() => this.closeMenuHandler} >Accueil</Link>
                     }
                     {!this.props.token &&
@@ -154,7 +155,9 @@ class App extends PureComponent {
                         <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
                     }
                     {/*  <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link> */}
-                    <Link to="/welcome" onClick={() => this.closeMenuHandler}>Règles</Link>
+                    {this.props.token &&
+                        <Link to="/welcome" onClick={() => this.closeMenuHandler}>Règles</Link>
+                    }
                     <a href="https://www.yammer.com/altengroup.eu/#/threads/inGroup?type=in_group&feedId=13919000" target="_blank" rel="noopener noreferrer">Fifa'lten<span>(Forum, Classements, Communautés...)</span></a>
                     {this.props.token &&
                         <Link to="/logout" onClick={() => this.closeMenuHandler}>Se déconnecter</Link>

@@ -114,21 +114,21 @@ class Auth extends PureComponent {
         }
 
         return (
-            <div className={styles.Auth}>
-                <div className={styles.authWrapper}>
-                    <h3>{this.state.isSignedUp ? 'Connexion' : 'Création de compte'}</h3>
-                    {!this.state.isSignedUp &&
-                        <p>Créez un compte avec votre adresse email Alten pour commencer à faire vos pronostics !</p>
-                    }
-                    {this.props.token && !this.props.bets &&
-                        <Redirect to='/welcome' />
-                    }
-                    {this.props.token && this.props.bets && 
-                        <Redirect to='/home' />
-                    }
-                    {form}
+                <div className={styles.Auth}>
+                    <div className={styles.authWrapper}>
+                        <h3>{this.state.isSignedUp ? 'Connexion' : 'Création de compte'}</h3>
+                        {!this.state.isSignedUp &&
+                            <p>Créez un compte avec votre adresse email Alten pour commencer à faire vos pronostics !</p>
+                        }
+                        {this.props.token && !this.props.bets &&
+                            <Redirect to='/welcome' />
+                        }
+                        {this.props.token && this.props.bets &&
+                            <Redirect to='/home' />
+                        }
+                        {form}
+                    </div>
                 </div>
-            </div>
         );
     }
 }
