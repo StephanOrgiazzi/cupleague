@@ -13,6 +13,12 @@
         width: 400px;
         margin: 0 auto;
     }
+
+    .Home {
+        height: 85vh;
+        display: flex;
+        align-items: center;
+      }
 }
 
 .buttonsWrapper {

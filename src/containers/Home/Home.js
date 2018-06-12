@@ -18,7 +18,7 @@ class Home extends Component {
                     </div>
                     <h3>Prochain match</h3>
                     {this.props.matches && this.props.teams && this.props.stadiums ? <Game match={this.props.matches[0]} teams={this.props.teams} stadiums={this.props.stadiums} /> : <Spinner />}
-                    <p>Vous pouvez modifier vos pronostics jusqu'à 24h avant chaque match.</p>
+                    <p>Vous pouvez modifier vos pronostics jusqu'à 1h avant chaque match.</p>
                 </div>
             </div>
         );

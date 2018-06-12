@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../../components/Spinner/Spinner';
 import FloatingLabel, {
@@ -12,7 +12,7 @@ import * as actionTypes from "../../store/actions/auth.js";
 import { Redirect, withRouter } from 'react-router-dom';
 
 
-class Auth extends PureComponent {
+class Auth extends Component {
 
     state = {
         email: '',
