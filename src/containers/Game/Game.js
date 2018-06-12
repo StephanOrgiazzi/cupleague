@@ -32,6 +32,11 @@ class Game extends Component {
                 ...this.state,
                 home_team_forecast: event.target.value
             }, this.postHomeTeam);
+        } else {
+            this.setState({
+                ...this.state,
+                home_team_forecast: 0
+            }, this.postHomeTeam);
         }
     }
 
@@ -42,6 +47,11 @@ class Game extends Component {
             this.setState({
                 ...this.state,
                 away_team_forecast: event.target.value
+            }, this.postAwayTeam);
+        } else {
+            this.setState({
+                ...this.state,
+                away_team_forecast: 0
             }, this.postAwayTeam);
         }
     }
@@ -57,8 +67,8 @@ class Game extends Component {
             }
             try {
                 this.preventClick();
-                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
                 this.authorizeClick();
+                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
             } catch (err) {
                 console.log(err);
                 this.authorizeClick();
@@ -77,12 +87,11 @@ class Game extends Component {
             }
             try {
                 this.preventClick();
-                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
                 this.authorizeClick();
+                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
             } catch (err) {
                 console.log(err);
                 this.authorizeClick();
-
             }
         }
     }
@@ -97,9 +106,10 @@ class Game extends Component {
     };
 
     authorizeClick = (e) => {
-        document.body.removeEventListener("click", this.click);
+        setTimeout(() => {
+            document.body.removeEventListener("click", this.click);
+        }, 1200);
     };
-
 
     render() {
 

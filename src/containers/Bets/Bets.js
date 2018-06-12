@@ -102,7 +102,7 @@ class Bets extends Component {
 
         return (
             <div className={styles.Bets}>
-                {this.state.bets ? <Redirect to='/welcome' /> :
+                {this.state.bets ? <Redirect to='/home' /> :
                     <div className={styles.betsWrapper}>
                         <form className={styles.betsForm} onSubmit={this.onSubmitHandler}>
                             <h3>Choisis tes favoris !</h3>

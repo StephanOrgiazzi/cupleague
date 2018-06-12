@@ -95,12 +95,12 @@ class Auth extends PureComponent {
                     <FloatingLabel
                         id='password'
                         name='password'
-                        placeholder='Password'
+                        placeholder='Mot de passe (6 char. min)'
                         styles={inputStyle}
                         type='password'
                         onChange={(event) => this.onChangeHandler(event, 'password')}
-                        pattern="[A-Za-z0-9]{6,}"
-                        title="Must be alphanumeric and contain at least 6 characters"
+                        pattern=".{6,}"
+                        title="At least 6 characters"
                         required
                     />
                     <button>Suivant</button>
@@ -120,8 +120,11 @@ class Auth extends PureComponent {
                     {!this.state.isSignedUp &&
                         <p>Créez un compte avec votre adresse email Alten pour commencer à faire vos pronostics !</p>
                     }
-                    {this.props.token &&
+                    {this.props.token && !this.props.bets &&
                         <Redirect to='/welcome' />
+                    }
+                    {this.props.token && this.props.bets && 
+                        <Redirect to='/home' />
                     }
                     {form}
                 </div>

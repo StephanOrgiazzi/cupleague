@@ -12,7 +12,7 @@ class Header extends PureComponent {
         return (
             <div className={styles.Header}>
                 <div className={styles.user}>
-                            <div className={styles.userName}>{this.props.lastName && this.props.firstName && this.props.token ? `${this.props.firstName} ${this.props.lastName}` : '' }</div>
+                            <div className={styles.userName}>{this.props.lastName && this.props.firstName && this.props.token ? `${this.props.firstName}` : '' }</div>
                             <div className={styles.userPoints}>{this.props.points && this.props.token ? `${this.props.points} pts` : '' }</div>
                 </div>
                 <div className={styles.logos}>
