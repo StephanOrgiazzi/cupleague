@@ -6,6 +6,7 @@ import Auth from './containers/Auth/Auth';
 import Welcome from './components/Welcome/Welcome';
 import Scoring from './components/Scoring/Scoring';
 import Prize from './components/Prize/Prize';
+import Success from './components/Success/Success';
 import Header from './containers/Header/Header';
 import Home from './containers/Home/Home';
 import Bets from './containers/Bets/Bets';
@@ -132,6 +133,7 @@ class App extends PureComponent {
                 <Route exact path="/welcome" component={Welcome} />
                 <Route exact path="/scoring" component={Scoring} />
                 <Route exact path="/prize" component={Prize} />
+                <Route exact path="/success" component={Success} />
                 <Route exact path="/forecasts" render={() => <Forecasts matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
                 <Route exact path="/rank" component={Rank} />
                 <Redirect to="/" />
@@ -141,10 +143,10 @@ class App extends PureComponent {
         return (
             <div className="App">
                 <Menu isOpen={this.state.menuOpen} className="Menu">
-                    <img src={logoburger} className='logoburger' alt='Logos Mondial10 et Yammer' />
-                    {this.props.token && (this.state.bets) &&
+                    <img src={logoburger} className='logoburger' alt='Logos altencup-dev et Yammer' />
+{/*                     {this.props.token && (this.state.bets) &&
                         <Link to="/Home" onClick={() => this.closeMenuHandler} >Accueil</Link>
-                    }
+                    } */}
                     {!this.props.token &&
                         <Link to="/" onClick={() => this.closeMenuHandler}>Connexion</Link>
                     }

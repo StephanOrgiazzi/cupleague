@@ -86,6 +86,7 @@ class Bets extends Component {
             }
             try {
                 await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/bets.json?auth=${this.props.token}`, data);
+                this.props.history.push('/success');
             } catch (err) {
                 console.log(err);
             }
@@ -101,7 +102,7 @@ class Bets extends Component {
 
         return (
             <div className={styles.Bets}>
-                {this.state.bets ? <Redirect to='/home' /> :
+                {this.state.bets ? <Redirect to='/welcome' /> :
                     <div className={styles.betsWrapper}>
                         <form className={styles.betsForm} onSubmit={this.onSubmitHandler}>
                             <h3>Choisis tes favoris !</h3>

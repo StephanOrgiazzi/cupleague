@@ -56,11 +56,12 @@ class Auth extends PureComponent {
         const inputStyle = {
             floating: {
                 ...floatingStyles,
-                color: '#FFEB00'
+                color: '#FFEB00',
+                textShadow: '1px 1px 1px gray'
             },
             focus: {
                 ...focusStyles,
-                borderColor: '#FFEB00'
+                borderColor: '#FFEB00',
             },
             input: {
                 ...inputStyles,
