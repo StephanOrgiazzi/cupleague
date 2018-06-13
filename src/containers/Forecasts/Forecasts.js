@@ -17,6 +17,7 @@ class Forecasts extends Component {
                         <h3>Matchs à venir</h3>
                         <img src={ball} alt="soccer ball" />
                     </div>
+                    <p>Vous pouvez modifier vos pronostics à tout moment jusqu'à 1h avant le début de chaque match.</p>
                     {this.props.matches && this.props.teams && this.props.stadiums ? this.props.matches.map((game, index) => {
                         return <Game match={this.props.matches[index]} teams={this.props.teams} stadiums={this.props.stadiums} key={index} />}) : <Spinner />
                     }
