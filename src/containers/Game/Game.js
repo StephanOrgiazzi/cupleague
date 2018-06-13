@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styles from './Game.module.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
 
-class Game extends Component {
+class Game extends PureComponent {
 
     state = {
         home_team_forecast: null,
         away_team_forecast: null,
-        validated: false
+        validated: false,
+        data: null
     }
 
     async componentDidMount() {
@@ -18,6 +19,7 @@ class Game extends Component {
             const res = await axios.get(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts.json?auth=${this.props.token}`);
             const data = res.data;
             this.setState({
+                ...this.state,
                 data: data
             })
         } catch (err) {
@@ -70,11 +72,6 @@ class Game extends Component {
                 this.preventClick();
                 this.authorizeClick();
                 await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
-                this.setState({
-                    ...this.state,
-                    validated: true
-                })
-                console.log(data);
             } catch (err) {
                 console.log(err);
                 this.authorizeClick();
@@ -92,12 +89,6 @@ class Game extends Component {
                 this.preventClick();
                 this.authorizeClick();
                 await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
-                this.setState({
-                    ...this.state,
-                    validated: true
-                })
-                console.log(data);
-
             } catch (err) {
                 console.log(err);
                 this.authorizeClick();
@@ -121,7 +112,6 @@ class Game extends Component {
                     validated: true
                 })
                 await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
-                console.log(data);
             } catch (err) {
                 console.log(err);
                 this.authorizeClick();
@@ -129,7 +119,8 @@ class Game extends Component {
         }
     }
 
-    onSubmitHandler = () => {
+    onSubmitHandler = (e) => {
+        e.preventDefault();
         this.postTeams();
     }
 
@@ -150,15 +141,6 @@ class Game extends Component {
 
     render() {
 
-        // Set forecasts
-        const matchName = this.props.match.name;
-        let homeTeamPlaceholder = '...';
-        let awayTeamPlaceholder = '...';
-        if (this.state.data && this.state.data.hasOwnProperty(matchName)) {
-            homeTeamPlaceholder = this.state.data[matchName].home_team_forecast;
-            awayTeamPlaceholder = this.state.data[matchName].away_team_forecast;
-        }
-
         let buttonStyle = {};
 
         if (this.state.validated) {
@@ -168,14 +150,37 @@ class Game extends Component {
             }
         }
 
+
+        // Set forecasts
+        const matchName = this.props.match.name;
+        let homeTeamPlaceholder = '...';
+        let awayTeamPlaceholder = '...';
+        let validateButton = <button onClick={this.onSubmitHandler} style={buttonStyle}>{!this.state.validated ? 'Valider' : 'Validé !'}</button>;
+        let changeButton = this.state.validated ? <button onClick={this.onSubmitHandler}>Modifier</button> : '';
+        if (this.state.data && this.state.data.hasOwnProperty(matchName)) {
+            if (this.state.data[matchName].home_team_forecast && this.state.data[matchName].away_team_forecast) {
+                homeTeamPlaceholder = this.state.data[matchName].home_team_forecast;
+                awayTeamPlaceholder = this.state.data[matchName].away_team_forecast;
+                validateButton = <button onClick={this.onSubmitHandler} style={{
+                    background: '#00C663',
+                    border: 'none'
+                }}>{this.state.data[matchName].home_team_forecast && this.state.data[matchName].away_team_forecast ? 'Validé' : 'Valider'}</button>;
+                if (this.state.data[matchName].home_team_forecast && this.state.data[matchName].away_team_forecast) {
+                    changeButton = <button onClick={this.onSubmitHandler}>Modifier</button>;
+                }
+            }
+        }
+
+
         return (
 
             <div className={styles.Game}>
+            <form>
                 <div className={styles.gameWrapper}>
                     <div className={styles.countryA}>
                         <div className={styles.score}>
                             <img src={this.props.teams[(this.props.match.home_team) - 1].flag} alt="Flag" />
-                            <input type="text" name="currentScore" placeholder={homeTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeHomeTeamHandler} pattern="[0-9]+" title="numbers only" />
+                            <input type="text" name="currentScore" placeholder={homeTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeHomeTeamHandler} pattern="[0-9]+" title="numbers only" required />
                         </div>
                         <div className={styles.info}>
                             <span className={styles.countryName}>
@@ -189,7 +194,7 @@ class Game extends Component {
                     <span className={styles.dash}>-</span>
                     <div className={styles.countryB}>
                         <div className={styles.score}>
-                            <input type="text" name="currentScore" placeholder={awayTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeAwayTeamHandler} pattern="[0-9]+" title="number only" />
+                            <input type="text" name="currentScore" placeholder={awayTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeAwayTeamHandler} pattern="[0-9]+" title="number only" required />
                             <img src={this.props.teams[(this.props.match.away_team) - 1].flag} alt="Flag" />
                         </div>
                         <div className={styles.info}>
@@ -202,7 +207,9 @@ class Game extends Component {
                         </div>
                     </div>
                 </div>
-                <button onClick={this.onSubmitHandler} style={buttonStyle}>{!this.state.validated ? 'Valider' : 'Validé !'}</button>
+                {validateButton}
+                {changeButton}   
+                </form>             
             </div>
         );
     }
