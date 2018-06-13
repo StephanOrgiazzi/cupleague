@@ -1,30 +1,21 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import styles from './Game.module.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
 
-class Game extends PureComponent {
+class Game extends Component {
 
     state = {
         home_team_forecast: null,
         away_team_forecast: null,
         validated: false,
-        data: null
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        // console.log(this.props.data[1].home_team_forecast);
+        // console.log(this.props);
 
-        try {
-            const res = await axios.get(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts.json?auth=${this.props.token}`);
-            const data = res.data;
-            this.setState({
-                ...this.state,
-                data: data
-            })
-        } catch (err) {
-            console.log(err);
-        }
     }
 
     onChangeHomeTeamHandler = (event) => {
@@ -34,7 +25,7 @@ class Game extends PureComponent {
             this.setState({
                 ...this.state,
                 home_team_forecast: event.target.value
-            });
+            }, () => { console.log(this.state) });
         } else {
             this.setState({
                 ...this.state,
@@ -49,8 +40,8 @@ class Game extends PureComponent {
         if (regTest) {
             this.setState({
                 ...this.state,
-                away_team_forecast: event.target.value
-            });
+                away_team_forecast: event.target.value,
+            }, () => { console.log(this.state) });
         } else {
             this.setState({
                 ...this.state,
@@ -60,40 +51,6 @@ class Game extends PureComponent {
     }
 
     async postTeams() {
-        if (this.state.home_team_forecast && !this.state.away_team_forecast) {
-            const data = {
-                name: this.props.match.name,
-                home_team: this.props.match.home_team,
-                home_team_forecast: this.state.home_team_forecast,
-                match_date: this.props.match.date,
-                forecast_date: new Date().getTime()
-            }
-            try {
-                this.preventClick();
-                this.authorizeClick();
-                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
-            } catch (err) {
-                console.log(err);
-                this.authorizeClick();
-            }
-        }
-        if (this.state.away_team_forecast && !this.state.home_team_forecast) {
-            const data = {
-                name: this.props.match.name,
-                away_team: this.props.match.away_team,
-                away_team_forecast: this.state.away_team_forecast,
-                match_date: this.props.match.date,
-                forecast_date: new Date().getTime()
-            }
-            try {
-                this.preventClick();
-                this.authorizeClick();
-                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
-            } catch (err) {
-                console.log(err);
-                this.authorizeClick();
-            }
-        }
         if (this.state.home_team_forecast && this.state.away_team_forecast) {
             const data = {
                 name: this.props.match.name,
@@ -111,7 +68,8 @@ class Game extends PureComponent {
                     ...this.state,
                     validated: true
                 })
-                await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
+                const res = await axios.patch(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts/${this.props.match.name}.json?auth=${this.props.token}`, data);
+                console.log(res.data);
             } catch (err) {
                 console.log(err);
                 this.authorizeClick();
@@ -157,59 +115,59 @@ class Game extends PureComponent {
         let awayTeamPlaceholder = '...';
         let validateButton = <button onClick={this.onSubmitHandler} style={buttonStyle}>{!this.state.validated ? 'Valider' : 'Validé !'}</button>;
         let changeButton = this.state.validated ? <button onClick={this.onSubmitHandler}>Modifier</button> : '';
-        if (this.state.data && this.state.data.hasOwnProperty(matchName)) {
-            if (this.state.data[matchName].home_team_forecast && this.state.data[matchName].away_team_forecast) {
-                homeTeamPlaceholder = this.state.data[matchName].home_team_forecast;
-                awayTeamPlaceholder = this.state.data[matchName].away_team_forecast;
-                validateButton = <button onClick={this.onSubmitHandler} style={{
-                    background: '#00C663',
-                    border: 'none'
-                }}>{this.state.data[matchName].home_team_forecast && this.state.data[matchName].away_team_forecast ? 'Validé' : 'Valider'}</button>;
-                if (this.state.data[matchName].home_team_forecast && this.state.data[matchName].away_team_forecast) {
-                    changeButton = <button onClick={this.onSubmitHandler}>Modifier</button>;
+            if (this.props.data) {
+                if (this.props.data[matchName]) {
+                    homeTeamPlaceholder = this.props.data[matchName].home_team_forecast;
+                    awayTeamPlaceholder = this.props.data[matchName].away_team_forecast;
+                    validateButton = <button onClick={this.onSubmitHandler} style={{
+                        background: '#00C663',
+                        border: 'none'
+                    }}>{this.props.data[matchName].home_team_forecast && this.props.data[matchName].away_team_forecast ? 'Validé' : 'Valider'}</button>;
+                    if (this.props.data[matchName].home_team_forecast && this.props.data[matchName].away_team_forecast) {
+                        changeButton = <button onClick={this.onSubmitHandler}>Modifier</button>;
+                    }
                 }
             }
-        }
 
 
         return (
 
             <div className={styles.Game}>
-            <form>
-                <div className={styles.gameWrapper}>
-                    <div className={styles.countryA}>
-                        <div className={styles.score}>
-                            <img src={this.props.teams[(this.props.match.home_team) - 1].flag} alt="Flag" />
-                            <input type="text" name="currentScore" placeholder={homeTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeHomeTeamHandler} pattern="[0-9]+" title="numbers only" required />
+                <form>
+                    <div className={styles.gameWrapper}>
+                        <div className={styles.countryA}>
+                            <div className={styles.score}>
+                                <img src={this.props.teams[(this.props.match.home_team) - 1].flag} alt="Flag" />
+                                <input type="text" name="currentScore" placeholder={homeTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeHomeTeamHandler} pattern="[0-9]+" title="numbers only" required />
+                            </div>
+                            <div className={styles.info}>
+                                <span className={styles.countryName}>
+                                    {this.props.teams[(this.props.match.home_team) - 1].name}
+                                </span>
+                                <span className={styles.date}>
+                                    {this.props.match.date.slice(0, -15)}
+                                </span>
+                            </div>
                         </div>
-                        <div className={styles.info}>
-                            <span className={styles.countryName}>
-                                {this.props.teams[(this.props.match.home_team) - 1].name}
-                            </span>
-                            <span className={styles.date}>
-                                {this.props.match.date.slice(0, -15)}
-                            </span>
+                        <span className={styles.dash}>-</span>
+                        <div className={styles.countryB}>
+                            <div className={styles.score}>
+                                <input type="text" name="currentScore" placeholder={awayTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeAwayTeamHandler} pattern="[0-9]+" title="number only" required />
+                                <img src={this.props.teams[(this.props.match.away_team) - 1].flag} alt="Flag" />
+                            </div>
+                            <div className={styles.info}>
+                                <span className={styles.countryName}>
+                                    {this.props.teams[(this.props.match.away_team) - 1].name}
+                                </span>
+                                <span className={styles.groupPlace}>
+                                    {this.props.stadiums[(this.props.match.stadium) - 1].city}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <span className={styles.dash}>-</span>
-                    <div className={styles.countryB}>
-                        <div className={styles.score}>
-                            <input type="text" name="currentScore" placeholder={awayTeamPlaceholder} className={styles.currentScore} onChange={this.onChangeAwayTeamHandler} pattern="[0-9]+" title="number only" required />
-                            <img src={this.props.teams[(this.props.match.away_team) - 1].flag} alt="Flag" />
-                        </div>
-                        <div className={styles.info}>
-                            <span className={styles.countryName}>
-                                {this.props.teams[(this.props.match.away_team) - 1].name}
-                            </span>
-                            <span className={styles.groupPlace}>
-                                {this.props.stadiums[(this.props.match.stadium) - 1].city}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                {validateButton}
-                {changeButton}   
-                </form>             
+                    {validateButton}
+                    {changeButton}
+                </form>
             </div>
         );
     }

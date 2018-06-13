@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Game from '../Game/Game';
+import GameWrapper from '../GameWrapper/GameWrapper';
 import Spinner from '../../components/Spinner/Spinner';
 
 import ball from '../../assets/ball.png';
@@ -19,7 +19,7 @@ class Forecasts extends Component {
                     </div>
                     <p>Vous pouvez modifier vos pronostics à tout moment jusqu'à 1h avant le début de chaque match.</p>
                     {this.props.matches && this.props.teams && this.props.stadiums ? this.props.matches.map((game, index) => {
-                        return <Game match={this.props.matches[index]} teams={this.props.teams} stadiums={this.props.stadiums} key={index} />}) : <Spinner />
+                        return <GameWrapper match={this.props.matches[index]} teams={this.props.teams} stadiums={this.props.stadiums} key={index} />}) : <Spinner />
                     }
                 </div>
             </div>

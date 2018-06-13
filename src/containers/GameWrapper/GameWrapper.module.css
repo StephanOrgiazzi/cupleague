@@ -1,0 +1,110 @@
+.Game {
+    border-bottom: 2px solid #fff;
+    padding: 1rem 0;
+    margin: 2.5rem 0;
+}
+
+.gameWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.Game:last-of-type {
+    border-bottom: none;
+}
+
+.Game img {
+    width: 4.5rem;
+    height: 3rem;
+    border-radius: 10px;
+}
+
+.Game button {
+    display: block;
+    margin: .5rem auto;
+    padding: 0 1rem;
+    width: 95%;
+    height: 30px;
+    font-size: 1.4rem;
+    outline: none;
+}
+
+.countryA, .countryB {
+    width: 45%;
+}
+
+.score {
+    display: flex;
+    align-items: center;
+    margin-bottom: .7rem;
+}
+
+.currentScore {
+    margin: 0 1rem;
+    background-color: #fff;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 10px;
+    -o-appearance: none;
+    -ms-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    text-align: center;
+    padding: 0 1 0 0px;
+    font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.currentScore::placeholder {
+    color: black;
+}
+
+.currentScore:focus::placeholder {
+    color: transparent;
+}
+
+@media screen and (max-width: 361px) {
+    .currentScore {
+        margin: 0 .5rem;
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: black;
+}
+
+.countryName {
+    text-transform: uppercase;
+    font-family: Pop_Warner, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.date, .groupPlace {
+    font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1.2rem;
+}
+
+.countryB .info {
+    align-items: flex-end;
+}
+
+.countryB .score {
+    justify-content: flex-end;
+}
+
+.dash {
+    font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    align-self: center;
+    position: relative;
+    bottom: 20px;
+    font-size: 4rem;
+    font-weight: 400;
+}
