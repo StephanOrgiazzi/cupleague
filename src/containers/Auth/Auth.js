@@ -103,7 +103,7 @@ class Auth extends Component {
                         title="At least 6 characters"
                         required
                     />
-                    <button>Suivant</button>
+                    <button>{this.state.isSignedUp ? 'Se connecter' : "S'inscrire"}</button>
                     <p className={styles.changeAuth} onClick={this.switchAuthModeHandler}>{this.state.isSignedUp ? 'Créer un compte ?' : 'Vous avez déja un compte ?'}</p>
                 </form>
             </div>
