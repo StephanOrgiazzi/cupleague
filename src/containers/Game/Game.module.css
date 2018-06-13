@@ -1,8 +1,12 @@
 .Game {
-    display: flex;
-    justify-content: center;
     border-bottom: 2px solid #fff;
     padding: 1rem 0;
+    margin: 2.5rem 0;
+}
+
+.gameWrapper {
+    display: flex;
+    justify-content: center;
 }
 
 .Game:last-of-type {
@@ -13,6 +17,16 @@
     width: 4.5rem;
     height: 3rem;
     border-radius: 10px;
+}
+
+.Game button {
+    display: block;
+    margin: .5rem auto;
+    padding: 0 1rem;
+    width: 95%;
+    height: 30px;
+    font-size: 1.4rem;
+    outline: none;
 }
 
 .countryA, .countryB {
@@ -30,7 +44,7 @@
     background-color: #fff;
     color: black;
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: 500;
     border-radius: 10px;
     -o-appearance: none;
     -ms-appearance: none;
@@ -42,6 +56,7 @@
     border: none;
     text-align: center;
     padding: 0 1 0 0px;
+    font-family: Cronus_Round, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .currentScore::placeholder {

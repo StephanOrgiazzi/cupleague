@@ -16,6 +16,10 @@
     }
 }
 
+.Forecasts .title {
+    margin-bottom: -2rem;
+}
+
 .title {
     display: flex;
     align-items: center;

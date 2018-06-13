@@ -17,6 +17,11 @@ h3 {
         width: 450px;
         margin: 0 auto;
     }
+    .Auth {
+        height: 80vh;
+        display: flex;
+        align-items: center;
+    }
 }
 
 .form {
