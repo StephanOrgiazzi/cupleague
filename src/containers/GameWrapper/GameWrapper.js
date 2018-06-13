@@ -3,6 +3,7 @@ import styles from './GameWrapper.module.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Game from '../Game/Game';
+import Spinner from '../../components/Spinner/Spinner';
 
 class GameWrapper extends Component {
 
@@ -27,10 +28,13 @@ class GameWrapper extends Component {
 
     render() {
 
+        console.log(this.props);
+        
+
         return (
             <div className={styles.GameWrapper}>
-                {this.props.match && this.props.teams && this.props.stadiums && this.state.data &&
-                    <Game match={this.props.match} teams={this.props.teams} stadiums={this.props.stadiums} data={this.state.data}/>
+                {this.props.match && this.props.teams && this.props.stadiums ?
+                    <Game match={this.props.match} teams={this.props.teams} stadiums={this.props.stadiums} data={this.state.data}/> : <Spinner />
                 }
             </div>
         );

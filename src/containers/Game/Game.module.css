@@ -9,10 +9,6 @@
     justify-content: center;
 }
 
-.Game:last-of-type {
-    border-bottom: none;
-}
-
 .Game img {
     width: 4.5rem;
     height: 3rem;

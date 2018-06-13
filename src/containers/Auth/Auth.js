@@ -104,7 +104,7 @@ class Auth extends Component {
                         required
                     />
                     <button>Suivant</button>
-                    <p className={styles.changeAuth} onClick={this.switchAuthModeHandler}>{!this.state.isSignedUp ? 'Créer un compte ?' : 'Vous avez déja un compte ?'}</p>
+                    <p className={styles.changeAuth} onClick={this.switchAuthModeHandler}>{this.state.isSignedUp ? 'Créer un compte ?' : 'Vous avez déja un compte ?'}</p>
                 </form>
             </div>
         );
@@ -116,8 +116,8 @@ class Auth extends Component {
         return (
                 <div className={styles.Auth}>
                     <div className={styles.authWrapper}>
-                        <h3>{!this.state.isSignedUp ? 'Connexion' : 'Création de compte'}</h3>
-                        {this.state.isSignedUp &&
+                        <h3>{this.state.isSignedUp ? 'Connexion' : 'Création de compte'}</h3>
+                        {!this.state.isSignedUp &&
                             <p>Créez un compte avec votre adresse email Alten pour commencer à faire vos pronostics !</p>
                         }
                         {this.props.token && !this.props.bets &&
