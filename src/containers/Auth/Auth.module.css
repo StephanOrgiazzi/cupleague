@@ -29,6 +29,8 @@ h3 {
 }
 
 .changeAuth {
+    font-size: 1.2rem;
+    color: #C60000;
     text-decoration: underline;
     cursor: pointer;
 }
