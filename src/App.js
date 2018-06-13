@@ -42,8 +42,10 @@ class App extends PureComponent {
         try {
             const res = await axios.get('https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json');
             const data = res.data;
-            const now = new Date()
+            const now = new Date().getTime() + 3600000
             const matchesToSort = [];
+            
+            
 
             for (let pool in data.groups) {
                 data.groups[pool].matches.map(match => {

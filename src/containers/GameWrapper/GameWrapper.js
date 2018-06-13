@@ -28,9 +28,6 @@ class GameWrapper extends Component {
 
     render() {
 
-        console.log(this.props);
-        
-
         return (
             <div className={styles.GameWrapper}>
                 {this.props.match && this.props.teams && this.props.stadiums ?
