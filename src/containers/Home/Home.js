@@ -3,13 +3,39 @@ import styles from './Home.module.css';
 import { Link } from "react-router-dom";
 import GameWrapper from '../GameWrapper/GameWrapper';
 import Spinner from '../../components/Spinner/Spinner';
+import { connect } from 'react-redux';
+import axios from 'axios';
 
 class Home extends Component {
 
-    render() {
+    state = {
+        firstName: null,
+        points: null
+    }
 
-        // console.log(this.props);
-        
+    async componentDidMount() {
+        // Get user info
+        if (this.props.token) {
+            try {
+                const res = await axios.get(`https://altencup-dev.firebaseio.com/users/${this.props.userId}.json?auth=${this.props.token}`);
+                const data = res.data;
+                this.setState({
+                    ...this.state,
+                    points: data.points,
+                    firstName: data.firstName,
+                })
+                this.sendData();
+            } catch (err) {
+                console.log('header', err);
+            }
+        }
+    }
+
+    sendData = () => {
+        this.props.handleChange(this.state.points, this.state.firstName);
+    }
+
+    render() {
 
         return (
             <div className={styles.Home}>
@@ -29,4 +55,11 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        userId: state.auth_reducer.userId,
+        token: state.auth_reducer.token
+    }
+}
+
+export default connect(mapStateToProps, null)(Home);

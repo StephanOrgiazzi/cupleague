@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 
 import axios from './axios';
@@ -22,7 +22,7 @@ import { Route, Switch, Redirect, Link, withRouter } from "react-router-dom";
 
 import logoburger from './assets/logoburger.png';
 
-class App extends PureComponent {
+class App extends Component {
 
     state = {
         menuOpen: false,
@@ -44,8 +44,6 @@ class App extends PureComponent {
             const data = res.data;
             const now = new Date().getTime() + 3600000
             const matchesToSort = [];
-            
-            
 
             for (let pool in data.groups) {
                 data.groups[pool].matches.map(match => {
@@ -108,6 +106,13 @@ class App extends PureComponent {
 
     }
 
+    handleChange = (points, firstName) => {
+        this.setState({
+            points: points,
+            firstName: firstName
+        });
+    }
+
     async buttonClickHandler() {
         const data = {
             team1: '7',
@@ -129,7 +134,7 @@ class App extends PureComponent {
 
         let routes = (
             <Switch>
-                <Route exact path="/home" render={() => <Home matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
+                <Route exact path="/home" render={() => <Home matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} handleChange={this.handleChange}/>} />
                 <Route exact path="/bets" render={() => <Bets teams={this.state.teams} />} />
                 <Route exact path="/" render={() => <Auth bets={this.state.bets} />} />
                 <Route exact path="/logout" component={Logout} />
@@ -147,7 +152,7 @@ class App extends PureComponent {
             <div className="App">
                 <Menu isOpen={this.state.menuOpen} className="Menu">
                     <img src={logoburger} className='logoburger' alt='Logos altencup-dev et Yammer' />
-                    {this.props.token && 
+                    {this.props.token &&
                         <Link to="/Home" onClick={() => this.closeMenuHandler} >Accueil</Link>
                     }
                     {!this.props.token &&
