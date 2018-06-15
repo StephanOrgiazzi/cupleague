@@ -9,7 +9,6 @@ import Prize from './components/Prize/Prize';
 import Success from './components/Success/Success';
 import Header from './containers/Header/Header';
 import Home from './containers/Home/Home';
-import Bets from './containers/Bets/Bets';
 import Rank from './containers/Rank/Rank';
 import Forecasts from './containers/Forecasts/Forecasts';
 import Logout from './containers/Logout/Logout';
@@ -32,7 +31,6 @@ class App extends Component {
         firstName: '',
         lastName: '',
         points: '',
-        bets: null
     }
 
     async componentDidMount() {
@@ -66,7 +64,7 @@ class App extends Component {
                 }
             }
 
-            // Sorting Algorithm
+            // Sort games by date
             const mapped = matchesToSort.map((e, i) => {
                 return { index: i, value: new Date(e.date).getTime() };
             })
@@ -86,22 +84,6 @@ class App extends Component {
             })
         } catch (err) {
             console.log(err);
-        }
-
-        // Get user info
-        if (this.props.token) {
-            try {
-                const res = await axios.get(`https://altencup-dev.firebaseio.com/users/${this.props.userId}.json?auth=${this.props.token}`);
-                const data = res.data;
-                this.setState({
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    points: data.points,
-                    bets: data.bets
-                })
-            } catch (err) {
-                console.log('header', err);
-            }
         }
 
     }
@@ -135,8 +117,7 @@ class App extends Component {
         let routes = (
             <Switch>
                 <Route exact path="/home" render={() => <Home matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} handleChange={this.handleChange}/>} />
-                <Route exact path="/bets" render={() => <Bets teams={this.state.teams} />} />
-                <Route exact path="/" render={() => <Auth bets={this.state.bets} />} />
+                <Route exact path="/" render={() => <Auth />} />
                 <Route exact path="/logout" component={Logout} />
                 <Route exact path="/welcome" component={Welcome} />
                 <Route exact path="/scoring" component={Scoring} />
@@ -161,7 +142,7 @@ class App extends Component {
                     {this.props.token &&
                         <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
                     }
-                    {/*  <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link> */}
+                    {/* <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link> */}
                     {this.props.token &&
                         <Link to="/welcome" onClick={() => this.closeMenuHandler}>Règles</Link>
                     }

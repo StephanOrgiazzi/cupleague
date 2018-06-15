@@ -21,7 +21,7 @@ class Header extends Component {
             <div className={styles.Header}>
                 <div className={styles.user}>
                     <div className={styles.userName}>{this.props.token ? this.props.firstName : ''}</div>
-                    <div className={styles.userPoints}>{this.props.token ? `${this.props.points} pts` : ''}</div>
+                    <div className={styles.userPoints}>{this.props.token ? `${this.props.points} pts` : ''}</div> 
                 </div>
                 <img src={mondial10} alt="logo mondial10" className={styles.mondial10}/>
                 <div className={styles.logos}>

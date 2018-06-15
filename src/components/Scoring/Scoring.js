@@ -5,9 +5,9 @@ import styles from "./Scoring.module.css";
 
 const scoring = (props) => {
     return (
-            <div className={styles.Welcome}>
-                <div className={styles.welcomeWrapper}>
-                    <div className={styles.welcomeBox}>
+            <div className={styles.Scoring}>
+                <div className={styles.scoringWrapper}>
+                    <div className={styles.scoringBox}>
                         <h3>Les Points</h3>
                         <ul>
                             <li>- <span>3 points</span> pour le bon score pronostiqué</li>

@@ -13,7 +13,6 @@ class GameWrapper extends Component {
 
     async componentDidMount() {
 
-
         try {
             const res = await axios.get(`https://altencup-dev.firebaseio.com/users/${this.props.userId}/forecasts.json?auth=${this.props.token}`);
             const data = res.data;

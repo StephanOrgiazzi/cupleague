@@ -1,11 +1,63 @@
 import React, { Component } from 'react';
 import styles from './Rank.module.css';
-
+import { connect } from 'react-redux';
+import axios from 'axios';
 import trophies from '../../assets/treetrophies.png';
 
-class Home extends Component {
+class Rank extends Component {
+
+    state = {
+        data: null
+    }
+
+    async componentDidMount() {
+
+        try {
+            const res = await axios.get(`https://altencup-dev.firebaseio.com/users.json?auth=${this.props.token}`);
+            const data = res.data;
+            this.setState({
+                ...this.state,
+                data: data
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     render() {
+
+        const array = [];
+
+        if (this.state.data) {
+            let i = 0;
+            for (let user in this.state.data) {
+                if (i < 20) {
+                    const newObj = {
+                        points: this.state.data[user].points,
+                        firstName: this.state.data[user].firstName,
+                        lastName: this.state.data[user].lastName,
+                        rank: this.state.data[user].rank,
+                    };
+                    array.push(newObj)
+                }
+                i++;
+            }
+        }
+
+        console.log(array);
+
+        const ranking = array.map((user, index) => {
+            return (
+                <tr key={index}>
+                    <td>{user.firstName} {user.lastName}</td>
+                    <td>{user.points}</td>
+                    <td>{user.rank}</td>
+                </tr>
+            )
+        })
+
+        const top = ranking.slice(0,3);
+        const nextTop = ranking.slice(3,18);
 
         return (
             <div className={styles.Rank}>
@@ -47,16 +99,13 @@ class Home extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Marine</td>
-                                <td>22</td>
-                                <td>4ème</td>
-                            </tr>
-                            <tr>
-                                <td>Tom</td>
-                                <td>21</td>
-                                <td>5ème</td>
-                            </tr>
+
+                            {top}
+
+                            yo
+
+                            {nextTop}
+
                         </tbody>
                     </table>
                 </div>
@@ -65,4 +114,10 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        token: state.auth_reducer.token,
+    }
+}
+
+export default connect(mapStateToProps, null)(Rank);

@@ -120,10 +120,7 @@ class Auth extends Component {
                         {!this.state.isSignedUp &&
                             <p>Créez un compte avec votre adresse email Alten pour commencer à faire vos pronostics !</p>
                         }
-                        {this.props.token && !this.props.bets &&
-                            <Redirect to='/welcome' />
-                        }
-                        {this.props.token && this.props.bets &&
+                        {this.props.token &&
                             <Redirect to='/home' />
                         }
                         {form}
