@@ -1,0 +1,36 @@
+.Auth {
+    width: 90%;
+    margin: 0 auto;
+}
+
+h3 {
+    font-weight: 400;
+}
+
+.authWrapper {
+    width: 90%;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 640px) {
+    .authWrapper {
+        width: 450px;
+        margin: 0 auto;
+    }
+    .Auth {
+        height: 80vh;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.form {
+    width: 100%;
+}
+
+.changeAuth {
+    font-size: 1.2rem;
+    color: #C60000;
+    text-decoration: underline;
+    cursor: pointer;
+}

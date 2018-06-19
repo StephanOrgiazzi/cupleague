@@ -73,7 +73,7 @@ class Rank extends Component {
             )
         })
 
-        const nextTop = ranking.slice(0, 20);
+        const nextTop = ranking;
 
 
         return (

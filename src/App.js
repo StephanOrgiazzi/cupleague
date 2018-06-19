@@ -12,6 +12,8 @@ import Home from './containers/Home/Home';
 import Rank from './containers/Rank/Rank';
 import Forecasts from './containers/Forecasts/Forecasts';
 import Logout from './containers/Logout/Logout';
+import Auth2 from './containers/Auth2/Auth2';
+import Rank2 from './containers/Rank2/Rank2';
 import * as actionTypes from "./store/actions/auth";
 import { connect } from 'react-redux';
 
@@ -40,7 +42,11 @@ class App extends Component {
         try {
             const res = await axios.get('https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json');
             const data = res.data;
-            const now = new Date().getTime() + 3600000
+            const resTime = await axios.get('https://api.timezonedb.com/v2/get-time-zone?key=XWNL6CM5UTRR&format=json&by=zone&zone=Europe/Paris');
+            const dataTime = resTime.data;
+            // const now = moment().valueOf() + 3600000;
+            const now = (dataTime.timestamp - dataTime.gmtOffset) * 1000 + 3600000;
+            
             const matchesToSort = [];
 
             for (let pool in data.groups) {
@@ -125,6 +131,8 @@ class App extends Component {
                 <Route exact path="/success" component={Success} />
                 <Route exact path="/forecasts" render={() => <Forecasts matches={this.state.matches} teams={this.state.teams} stadiums={this.state.stadiums} />} />
                 <Route exact path="/rank" component={Rank} />
+                <Route exact path="/global_rank" component={Rank2} />
+                <Route exact path="/auth" component={Auth2} />
                 <Redirect to="/" />
             </Switch>
         )
@@ -142,7 +150,7 @@ class App extends Component {
                     {this.props.token &&
                         <Link to="/forecasts" onClick={() => this.closeMenuHandler}>Mes pronostics</Link>
                     }
-                    {/* <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link> */}
+                    <Link to="/rank" onClick={() => this.closeMenuHandler}>Classement</Link>
                     {this.props.token &&
                         <Link to="/welcome" onClick={() => this.closeMenuHandler}>Règles</Link>
                     }

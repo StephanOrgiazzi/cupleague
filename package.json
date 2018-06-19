@@ -5,6 +5,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "floating-label-react": "^0.2.0",
+    "moment": "^2.22.2",
+    "rapidapi-connect": "0.0.6",
     "react": "^16.4.0",
     "react-burger-menu": "^2.4.4",
     "react-dom": "^16.4.0",
