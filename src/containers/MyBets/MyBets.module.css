@@ -1,0 +1,26 @@
+.MyBets .titleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    margin: 0 auto;
+    margin-top: 1rem;
+}
+
+.MyBets .titleWrapper img {
+    margin: 1rem;
+}
+
+.MyBets h3 {
+    margin: 1rem auto;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    text-shadow: 1px 1px 1px lightgrey;
+}
+
+.MyBets img {
+    width: 2rem;
+    height: 2rem;
+}

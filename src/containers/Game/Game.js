@@ -14,12 +14,6 @@ class Game extends Component {
         awayValidated: false,
     }
 
-    componentDidMount() {
-        // console.log(this.props.data[1].home_team_forecast);
-        // console.log(this.props);
-
-    }
-
     onChangeHomeTeamHandler = (event) => {
         const reg = /^\d+$/;
         let regTest = reg.test(event.target.value);
